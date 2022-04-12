@@ -1,2 +1,2 @@
 # spm
-Collage ERP
+College ERP
