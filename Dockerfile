@@ -6,7 +6,6 @@ RUN pip install asgiref && \
     pip install djoser && \
     pip install pytz && \
     pip install sqlparse
-WORKDIR /app
-COPY . /app
+COPY . .
 EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000" ]
