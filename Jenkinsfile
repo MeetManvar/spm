@@ -17,6 +17,18 @@ pipeline {
     //     AWS_ECS_TASK_DEFINITION_PATH = './ecs/container-definition-update-image.json'
     // }
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'main']],
+                    userRemoteConfigs: [[
+                        url: 'git clone https://github.com/MeetManvar/spm.git',
+                        credentialsId: '',
+                    ]]
+                ])
+            }
+        }
         stage('clone'){
             steps{
                 
