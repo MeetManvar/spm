@@ -58,7 +58,7 @@ pipeline {
             }
         }
 
-        stage('Deploy in ECS') {
+        stage('Deploy-in-ECS') {
             steps {
                 // withCredentials([string(credentialsId: 'AWS_EXECUTION_ROL_SECRET', variable: 'AWS_ECS_EXECUTION_ROL'),string(credentialsId: 'AWS_REPOSITORY_URL_SECRET', variable: 'AWS_ECR_URL')]) {
                 //     script {
