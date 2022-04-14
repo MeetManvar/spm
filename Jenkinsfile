@@ -30,7 +30,7 @@ pipeline {
         stage('build'){
             steps{
 
-                sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/l5z6v4n0"
+                sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/i4y9b5h8"
 
                 // script
                 // {
@@ -39,9 +39,9 @@ pipeline {
                 sh """ 
                     cd git_prac_exe/ &&
 
-                    docker build -t public.ecr.aws/l5z6v4n0/spm-test:latest .
+                    docker build -t public.ecr.aws/i4y9b5h8/spm:latest .
                   
-                    docker push public.ecr.aws/l5z6v4n0/spm-test:latest """
+                    docker push public.ecr.aws/i4y9b5h8/spm:latest """
                 
             }
         }
