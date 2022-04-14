@@ -23,7 +23,7 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: 'main']],
                     userRemoteConfigs: [[
-                        url: 'git clone https://github.com/MeetManvar/spm.git',
+                        url: 'https://github.com/MeetManvar/spm.git',
                         credentialsId: '',
                     ]]
                 ])
