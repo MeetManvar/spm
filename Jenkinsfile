@@ -1,4 +1,3 @@
-properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
 
@@ -17,18 +16,18 @@ pipeline {
     //     AWS_ECS_TASK_DEFINITION_PATH = './ecs/container-definition-update-image.json'
     // }
     stages {
-        stage('Checkout SCM') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/MeetManvar/spm.git',
-                        credentialsId: '',
-                    ]]
-                ])
-            }
-        }
+//         stage('Checkout SCM') {
+//             steps {
+//                 checkout([
+//                     $class: 'GitSCM',
+//                     branches: [[name: 'main']],
+//                     userRemoteConfigs: [[
+//                         url: 'https://github.com/MeetManvar/spm.git',
+//                         credentialsId: '',
+//                     ]]
+//                 ])
+//             }
+//         }
         stage('clone'){
             steps{
                 
