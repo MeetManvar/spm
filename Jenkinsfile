@@ -68,7 +68,7 @@ pipeline {
                 //     }
                 // }
              
-                sh ''' echo"hello" '''
+                //sh ''' echo"hello" '''
                 sh '''aws ecs stop-task --cluster "myapp-cluster" --task $(aws ecs list-tasks --cluster "myapp-cluster" --service "testapp-service" --output text --query taskArns[0])
 
                     aws ecs update-service --cluster myapp-cluster --service testapp-service --task-definition testapp-task --force-new-deployment '''
