@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'info.User'
 
+CSRF_TRUSTED_ORIGINS = ['https://www.meetmanvar.ml']
 
 # Application definition
 
