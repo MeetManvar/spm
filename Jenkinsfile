@@ -32,7 +32,7 @@ pipeline {
 
                 
                 sh """ 
-                    cd git_prac_exe/ &&
+                    cd spm/ &&
 
                     docker build -t public.ecr.aws/i4y9b5h8/spm:latest . """
                 
