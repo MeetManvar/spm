@@ -48,15 +48,15 @@ pipeline {
         }
         stage('Stop Existing Task') {
             steps {
-               
-                sh '''aws ecs stop-task --cluster "myapp-cluster" --task $(aws ecs list-tasks --cluster "myapp-cluster" --service "testapp-service" --output text --query taskArns[0]) '''
+               sh ''' echo "Hello" '''
+                //sh '''aws ecs stop-task --cluster "myapp-cluster" --task $(aws ecs list-tasks --cluster "myapp-cluster" --service "testapp-service" --output text --query taskArns[0]) '''
             }
         }
 
         stage('Update Service') {
             steps {
-               
-                sh ''' aws ecs update-service --cluster myapp-cluster --service testapp-service --task-definition testapp-task --force-new-deployment '''
+               sh ''' echo "Hello" '''
+                //sh ''' aws ecs update-service --cluster myapp-cluster --service testapp-service --task-definition testapp-task --force-new-deployment '''
             }
         }
     }
