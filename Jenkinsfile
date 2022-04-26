@@ -2,34 +2,13 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
 
-    // environment {
-    //     POM_VERSION = getVersion()
-    //     JAR_NAME = getJarName()
-    //     VAR = "var"
-    //     AWS_ECR_REGION = 'us-east-1'
-    //     AWS_ECS_SERVICE = 'testapp-service'
-    //     AWS_ECS_TASK_DEFINITION = 'testapp-task'
-    //     AWS_ECS_COMPATIBILITY = 'FARGATE'
-    //     AWS_ECS_NETWORK_MODE = 'awsvpc'
-    //     //AWS_ECS_CPU = '256'
-    //     //AWS_ECS_MEMORY = '512'
-    //     AWS_ECS_CLUSTER = 'myapp-cluster'
-    //     AWS_ECS_TASK_DEFINITION_PATH = './ecs/container-definition-update-image.json'
-    // }
     stages {
         stage('Checkout SCM') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/MeetManvar/spm.git',
-                        credentialsId: '',
-                    ]]
-                ])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MeetManvar/spm.git']]])
             }
         }
-        stage('clone'){
+        stage('Clone'){
             steps{
                 
                 sh "rm -rf spm" 
@@ -39,31 +18,53 @@ pipeline {
             }
         }
      
-        stage('build'){
+        stage('Build'){
             steps{
 
-                sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/i4y9b5h8"
+                sh "docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) public.ecr.aws/i4y9b5h8"
 
-                // script
-                // {
-                //     VAR = sh(script: 'cd git_prac_exe/ && git rev-parse HEAD', returnStdout: true).trim()
-                // }
+                
                 sh """ 
                     cd git_prac_exe/ &&
 
-                    docker build -t public.ecr.aws/i4y9b5h8/spm:latest .
-                  
-                    docker push public.ecr.aws/i4y9b5h8/spm:latest """
+                    docker build -t public.ecr.aws/i4y9b5h8/spm:latest . """
                 
             }
         }
 
-        stage('Deploy---in---ECS') {
+        stage('Push'){
+            steps{
+
+                sh " docker push public.ecr.aws/i4y9b5h8/spm:latest "
+                
+            }
+        }
+        
+        stage('New_task'){
+              steps{
+                  sh '''
+                  ls -al
+                  aws --version
+                  aws ecs register-task-definition --cli-input-json file://./container-def-cli.json 
+                  '''
+              }
+          }
+          
+        stage('Stop Existing Task') {
             steps {
                
-                sh '''aws ecs stop-task --cluster "myapp-cluster" --task $(aws ecs list-tasks --cluster "myapp-cluster" --service "testapp-service" --output text --query taskArns[0])
+                sh '''
+            aws ecs stop-task --cluster "yes" --task $(aws ecs list-tasks --cluster "yes" --service "web-service1" --output text --query taskArns[0])
+            '''
+            }
+        }
 
-                    aws ecs update-service --cluster myapp-cluster --service testapp-service --task-definition testapp-task --force-new-deployment '''
+        stage('Update Service') {
+            steps {
+               
+                sh '''
+                  aws ecs update-service --cluster yes --service web-service1 --task-definition web-family --force-new-deployment
+                  ''' 
             }
         }
     }
