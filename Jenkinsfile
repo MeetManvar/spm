@@ -21,12 +21,12 @@ pipeline {
         stage('Build'){
             steps{
 
-                sh ''' docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) public.ecr.aws/i4y9b5h8 '''
+                sh ''' docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) public.ecr.aws/l5z6v4n0 '''
                 
                 sh """ 
                     cd spm/ &&
 
-                    docker build -t public.ecr.aws/i4y9b5h8/spm:latest . """
+                    docker build -t public.ecr.aws/l5z6v4n0/spm-test:latest . """
                 
             }
         }
@@ -34,7 +34,7 @@ pipeline {
         stage('Push'){
             steps{
 
-                sh " docker push public.ecr.aws/i4y9b5h8/spm:latest "
+                sh " docker push public.ecr.aws/l5z6v4n0/spm-test:latest "
                 
             }
         }
