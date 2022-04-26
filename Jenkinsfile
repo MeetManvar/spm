@@ -34,7 +34,7 @@ pipeline {
         stage('Push'){
             steps{
 
-                sh " docker push public.ecr.aws/l5z6v4n0/spm-test:latest "
+                sh ''' docker push public.ecr.aws/l5z6v4n0/spm-test:latest '''
                 
             }
         }
