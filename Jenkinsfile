@@ -53,8 +53,8 @@ pipeline {
             steps {
                
                 sh '''
-            aws ecs stop-task --cluster "yes" --task $(aws ecs list-tasks --cluster "yes" --service "web-service1" --output text --query taskArns[0])
-            '''
+                aws ecs stop-task --cluster "yes" --task $(aws ecs list-tasks --cluster "yes" --service "web-service1" --output text --query taskArns[0])
+                '''
             }
         }
 
