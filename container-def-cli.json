@@ -1,7 +1,7 @@
 {
   "containerDefinitions": [{
       "name": "pink-slon",
-      "image": "public.ecr.aws/i4y9b5h8/spm:latest",
+      "image": "public.ecr.aws/l5z6v4n0/spm-test:latest",
       "cpu": 10,
       "memory": 500,
       "essential": true,
